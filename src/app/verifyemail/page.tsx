@@ -15,16 +15,6 @@ export default function VerifyEmailPage(){
     //to check if there is an error
     const [error, setError] = useState(false);
 
-    const verifyUserEmail = async () => {
-        try {
-            await axios.post("/api/users/verifyemail", { token });
-            setVerified(true);
-        } catch (error:any) {
-            setError(true);
-            console.log(error.response.data);
-        }
-    }
-
     //to extract the token from the URL
     useEffect(() => {
         //here we will take token as everything from right of "=" in the URL as token,
@@ -36,6 +26,15 @@ export default function VerifyEmailPage(){
     //if there is a change in the token, we will run this:
     useEffect(() => {
         if(token.length > 0){
+            const verifyUserEmail = async () => {
+                try {
+                    await axios.post("/api/users/verifyemail", { token });
+                    setVerified(true);
+                } catch (error:any) {
+                    setError(true);
+                    console.log(error.response.data);
+                }
+            }
             verifyUserEmail();
         }
     }, [token]);

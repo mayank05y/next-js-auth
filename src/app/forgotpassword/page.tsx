@@ -41,6 +41,7 @@ export default function ForgotPasswordPage() {
                 className="bg-blue-500 text-white p-2 rounded">
                     {loading ? "Sending..." : "Send Reset Link"}
                 </button>
+            {error && <p className="text-red-500">An error occurred. Please try again.</p>}
         </form>
     )
 }
