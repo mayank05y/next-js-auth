@@ -1,10 +1,10 @@
 "use client";
 
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function ResetPasswordPage() {
+function ResetPasswordForm() {
     const params = useSearchParams();
     const token = params.get("token") || "";
     const [password, setPassword] = useState("");
@@ -30,7 +30,8 @@ export default function ResetPasswordPage() {
         }
         setLoading(false);
     };
-    return(
+
+    return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-2 max-w-sm mx-auto mt-10">
             <input
                 type="password"
@@ -57,5 +58,13 @@ export default function ResetPasswordPage() {
             {error && <p className="text-red-500 text-center">{error}</p>}
             {success && <p className="text-green-600 text-center">{success}</p>}
         </form>
+    );
+}
+
+export default function ResetPasswordPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ResetPasswordForm />
+        </Suspense>
     );
 }
